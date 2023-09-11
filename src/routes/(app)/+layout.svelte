@@ -1,5 +1,5 @@
 <script lang='ts'>
-    import { AppShell, Modal } from '@skeletonlabs/skeleton';
+    import { AppShell } from '@skeletonlabs/skeleton';
     // Implement skeletonUI Popup utilities
     import Navigation from '$lib/components/Navigation.svelte';
 
@@ -13,7 +13,6 @@
 
 </script>
 
-<Modal />
 <!-- {leftSideBarOpened ? 'w-64' : 'md:w-auto'} -->
 <AppShell regionPage="overflow-hidden" slotPageContent="overflow-hidden">
 	<svelte:fragment slot="sidebarLeft">

@@ -1,8 +1,6 @@
 import { error, json, type RequestHandler } from "@sveltejs/kit";
-import { GATEWAY_API } from "$lib/constants";
+import { MEMOBOARD_API } from "$lib/constants";
 
-
-const MEMOBOARD_API = `${GATEWAY_API}`
 
 type Target = 'memo' | 'board' | 'project'
 
@@ -25,9 +23,10 @@ export const PUT: RequestHandler = async ({ request, params }) => {
     const target: Target = params.target as Target;
     if (!isTarget(target)) throw error(403, 'Invalid target.');
 
+    const body = await request.json();
     const response = await fetch(`${MEMOBOARD_API}/${target}/${params.id}`, {
         method: 'PUT',
-        body: JSON.stringify(await request.json()),
+        body: JSON.stringify(body),
         headers: {
             'content-type': 'application/json'
         }

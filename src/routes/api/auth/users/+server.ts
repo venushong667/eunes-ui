@@ -1,22 +1,11 @@
 import { error, json, type RequestHandler } from "@sveltejs/kit";
-import { MEMOBOARD_API } from "$lib/constants";
+import { GATEWAY_API } from "$lib/constants";
 
 
-// enum Target {
-//     memo,
-//     board,
-//     project
-// }
-type Target = 'memo' | 'board' | 'project';
 
-function isTarget(value: unknown): value is Target {
-    return ['memo', 'board', 'project'].includes(value as string);
-}
 
-export const GET: RequestHandler = async ({ params }) => {
-    const target: Target = params.target as Target;
-    if (!isTarget(target)) throw error(403, 'Invalid target.');
-    const response = await fetch(`${MEMOBOARD_API}/${target}s`);
+export const GET: RequestHandler = async () => {
+    const response = await fetch(`${GATEWAY_API}/users`);
     const data = await response.json();
     
     return json(data);
@@ -24,11 +13,8 @@ export const GET: RequestHandler = async ({ params }) => {
 
 export const POST: RequestHandler = async ({ request, params }) => {
     try {
-        const target: Target = params.target as Target;
-        if (!isTarget(target)) throw error(403, 'Invalid target.');
-
         const body = await request.json();
-        const response = await fetch(`${MEMOBOARD_API}/${target}`, {
+        const response = await fetch(`${GATEWAY_API}/users`, {
             method: 'POST',
             body: JSON.stringify(body),
             headers: {

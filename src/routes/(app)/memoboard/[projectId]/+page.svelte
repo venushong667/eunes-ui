@@ -4,7 +4,7 @@
     import { browser } from '$app/environment';
     import { writable } from 'svelte/store';
     import { goto } from '$app/navigation';
-    import { modalStore } from '@skeletonlabs/skeleton';
+    import { getModalStore } from '@skeletonlabs/skeleton';
     import {v4 as uuidv4} from 'uuid';
     import type { Board, Project } from '../interfaces';
     import { createProject, deleteProject } from '../service';
@@ -19,6 +19,8 @@
     $: if (browser) goto(`/memoboard/${selectedProject.id}`);
 
     let tabSet: number = 0;
+
+    const modalStore = getModalStore();
 
     const popupProjectList: PopupSettings = {
         // Set the event as: click | hover | hover-click | focus | focus-click
